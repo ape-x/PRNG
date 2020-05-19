@@ -12,7 +12,7 @@ import Foundation
 var a : LFSR = LFSR(seed :"a")
 //a.startMachine(times_shifted: 8)
 var b : SHA1 = SHA1(input: "abc")
-//b.hash()
+b.hash()
 
 
 //15381
@@ -22,27 +22,36 @@ var b : SHA1 = SHA1(input: "abc")
 
 print(Int(UInt32(0xC3D2E1F0)))
 
-
-//Fiecare M de 512 il impart in 16 M[i] de 32
-//Fiecare M[i] de 32 il transform intr-un hex W[i]
-
+var c = Converter()
+print("LOL")
 
 
-//"abc"
-//hex : 61626380
-//binary :01100001011000100110001110000000
+func transformBinaryToAscii(input m : [Int])->Int{
+       var ascii : Int = 0
+       var k = m.count-1
+           for j in 0..<m.count{
+               ascii+=Int(powf(2,Float(j))*Float(m[k]))
+               k-=1
+           }
+       return ascii
+   }
 
-//
+func transformToDecimal(hexadecimal input : String)->Int{
+    let result = 0
+    var chars : [Character] = input.reversed()
+    chars = chars.reversed()
+    var k = chars.count-1
+    for _ in 0..<chars.count{
+        if chars[k].isNumber{
+            
+        }else if chars[k].isLetter{
+            
+        }
+        k-=1
+    }
+    return result
+    
+}
 
-
-func logicalOne(B : [Int], C : [Int], D : [Int])->[Int]{
-          var t = [Int]()
-          for i in 0..<32{
-              t.append((B[i]&C[i])|(~B[i])&D[i])
-          }
-          return t
-      }
-
-var s = Converter()
-//print(s.transformBinaryToAscii(input: [0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0]))
-print(s.transformToHex(input: 1633837952))
+//print(transformToDecimal(hexadecimal: "23C"))
+//10000001100100101010001110110

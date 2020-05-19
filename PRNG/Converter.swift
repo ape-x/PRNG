@@ -78,6 +78,39 @@ class Converter{
         return ascii
     }
     
+    func transformToDecimal(hexadecimal input : String)->Int{
+        var result = 0
+        var chars : [Character] = input.reversed()
+        chars = chars.reversed()
+        let k = chars.count-1
+        for i in 0..<chars.count{
+            if chars[i].isNumber{
+            result+=Int(powf(16,Float(i))*Float(chars[k].asciiValue!-48))
+            }else{
+                result+=Int(powf(16,Float(i)*Float(chars[k].asciiValue!-65+10)))
+            }
+        }
+        return result
+        
+    }
+    
+    func transformTo32(input : Int)->[Int]{
+        var array = [Int]()
+        var number = input
+        while true{
+                     array.append(number%2)
+                     if number/2 == 0{
+                         break
+                     }
+                     number = number/2
+                 }
+                 while array.count<32{
+                     array.append(0)
+                 }
+                 array = array.reversed()
+        return array
+    }
+    
 }
 
 protocol Convertible{
@@ -85,4 +118,5 @@ protocol Convertible{
     func transformToAscii(input : String)->[Int]
     func transformToHex(input : Int)->String
     func transformBinaryToAscii(input m : [Int])->Int
+    func transformTo32(input : Int)->[Int]
 }

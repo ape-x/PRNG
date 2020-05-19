@@ -27,7 +27,6 @@ class LFSR : Convertible{
     func transformToAscii(input: String) -> [Int] {
         return converter.transformToAscii(input: input)
     }
-    
     func transformToBinary(input : [Int])->[[Int]]{
         return converter.transformToBinary(input: input)
     }
@@ -35,8 +34,11 @@ class LFSR : Convertible{
         return converter.transformToHex(input: input)
     }
     func transformBinaryToAscii(input m : [Int])->Int{
-           return converter.transformBinaryToAscii(input : m)
-       }
+        return converter.transformBinaryToAscii(input : m)
+    }
+    func transformTo32(input : Int)->[Int]{
+        return converter.transformTo32(input : input)
+    }
     
     func startMachine(times_shifted turns : Int){
         for _ in 1...turns  {
