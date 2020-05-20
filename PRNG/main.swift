@@ -20,10 +20,7 @@ b.hash()
 //k = 448 - 21 - 1 = 426
 //15381 + 426 + 1 + 64 =
 
-print(Int(UInt32(0xC3D2E1F0)))
-
 var c = Converter()
-print("LOL")
 
 
 func transformBinaryToAscii(input m : [Int])->Int{
@@ -55,3 +52,40 @@ func transformToDecimal(hexadecimal input : String)->Int{
 
 //print(transformToDecimal(hexadecimal: "23C"))
 //10000001100100101010001110110
+
+
+func leftrotate(input : [Int], times : Int)->[Int]{
+    var result : [Int] = input.reversed()
+       for _ in 0..<times{
+           let head = result[result.count-1]
+           for j in (1...result.count-1).reversed(){
+               result[j] = result[j-1]
+           }
+           result[0] = head
+       }
+       
+       
+    return result.reversed()
+   }
+
+func transformTo32(input : Int)->[Int]{
+    var array = [Int]()
+    var number = input
+    while true{
+                 array.append(number%2)
+                 if number/2 == 0{
+                     break
+                 }
+                 number = number/2
+             }
+             while array.count<32{
+                 array.append(0)
+             }
+             array = array.reversed()
+    return array
+}
+
+//var number : UInt32 = 12903185459
+
+//print(transformTo32(input: 12903185459))
+//1100000001000101101111110000110011
