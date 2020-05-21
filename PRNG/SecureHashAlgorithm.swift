@@ -10,11 +10,11 @@ import Foundation
 
 class SHA1 : Convertible{
     
-    var H0 : UInt32 = 0x67452301 // 01100111010001010010001100000001
-    var H1 : UInt32 = 0xEFCDAB89 // 11101111110011011010101110001001
-    var H2 : UInt32 = 0x98BADCFE // 10011000101110101101110011111110
-    var H3 : UInt32 = 0x10325476 // 00010000001100100101010001110110
-    var H4 : UInt32 = 0xC3D2E1F0 // 11000011110100101110000111110000
+    var H0 : Int = 0x67452301
+    var H1 : Int = 0xEFCDAB89
+    var H2 : Int = 0x98BADCFE
+    var H3 : Int = 0x10325476
+    var H4 : Int = 0xC3D2E1F0
 
     
     var input : String
@@ -58,7 +58,6 @@ class SHA1 : Convertible{
             number = leftrotate(input: number, times: 1)
             W.append(number)
         }
-        print(W.count)
         
         var a = 1732584193
         var b = 4023233417
@@ -91,36 +90,32 @@ class SHA1 : Convertible{
                 return transformTo32(input: e)
             }
         }
-        
+      
         for i in 0...79{
             var k = 0x0
             var t = 0
             switch i {
             case 0...19 :
                k = 0x5a827999
- //               k = 1518500249
                  t = transformBinaryToAscii(input: leftrotate(input: A, times: 5))+transformBinaryToAscii(input : logicalOne(x: B, y: C, z: D))+transformBinaryToAscii(input: W[i])+e+k
-                print(t)
             case 20...39 :
                 k = 0x6ed9eba1
-//                k = 1859775393
                  t = transformBinaryToAscii(input: leftrotate(input: A, times: 5))+transformBinaryToAscii(input : logicalTwo(x: B, y: C, z: D))+transformBinaryToAscii(input: W[i])+e+k
-                print(t)
             case 40...59 :
                 k = 0x8f1bbcdc
-//                k = 2400959708
                  t = transformBinaryToAscii(input: leftrotate(input: A, times: 5))+transformBinaryToAscii(input : logicalThree(x: B, y: C, z: D))+transformBinaryToAscii(input: W[i])+e+k
             case 60...79 :
                 k = 0xca62c1d6
-//                k = 3395469782
                  t = transformBinaryToAscii(input: leftrotate(input: A, times: 5))+transformBinaryToAscii(input : logicalTwo(x: B, y: C, z: D))+transformBinaryToAscii(input: W[i])+e+k
             default :
                 break
             }
             let temp = transformToBinary(input: [t])
             var tm = temp[0]
+            if tm.count>32{
             while tm.count>32{
                 tm.remove(at: 0)
+            }
             }
             t = transformBinaryToAscii(input: tm)
             e = d
@@ -128,10 +123,26 @@ class SHA1 : Convertible{
             c = transformBinaryToAscii(input: leftrotate(input: B, times: 30))
             b = a
             a = t
-              print("\(A.count)                \(B.count)                \(C.count)                \(D.count)                \(E.count)                   \(i)")
-            print("A    \(transformToHex(input: a))     B   \(transformToHex(input : b))    C   \(transformToHex(input : c))    D   \(transformToHex(input : d))    E   \(transformToHex(input : e))\n")
-          
+       
         }
+        let bH0 = transformToBinary(input: [H0+a])
+        let bH1 = transformToBinary(input : [H1+b])
+        let bH2 = transformToBinary(input : [H2+c])
+        let bH3 = transformToBinary(input : [H3+d])
+        let bH4 = transformToBinary(input : [H4+e])
+        var hash = [bH0[0], bH1[0], bH2[0], bH3[0], bH4[0]]
+        for i in 0..<hash.count{
+            if hash[i].count>32{
+                while hash[i].count>32{
+                    hash[i].remove(at: 0)
+                }
+            }
+        }
+        var Hash = ""
+        for i in 0..<hash.count{
+            Hash+="\(transformToHex(input : transformBinaryToAscii(input : hash[i])))"
+        }
+        print(Hash)
     }
     
     func leftrotate(input : [Int], times : Int)->[Int]{
@@ -147,16 +158,18 @@ class SHA1 : Convertible{
     }
     
     func wordExpansion(A : [Int], B : [Int], C : [Int], D : [Int])->[Int]{
-        var array = [Int]()
-        let a : [Int] = A
-        let b : [Int] = B
-        let c : [Int] = C
-        let d : [Int] = D
-        for i in 0..<32{
-            array.append(a[i]^b[i]^c[i]^d[i])
-        }
-        return array
-    }
+           var array = [Int]()
+           let a = A
+           let b = B
+           let c = C
+           let d = D
+           
+           for i in 0..<32{
+               array.append(a[i]^b[i]^c[i]^d[i])
+           }
+           array = leftrotate(input: array, times: 0)
+           return array
+       }
     
     func logicalOne(x : [Int], y : [Int], z : [Int])->[Int]{ // (x,y,z) x&y XOR x&z
            var t = [Int]()
@@ -209,9 +222,9 @@ class SHA1 : Convertible{
                 array.append(m[i][j])
             }
         }
-        
+        let l = array.count
         array.append(1) // Pad 1
-        k = 448 - (array.count%512)
+        k = 448 - (l%512)
         k = k%512
         if k<0{
             k = k*(-1)
@@ -221,10 +234,9 @@ class SHA1 : Convertible{
             array.append(0)
         }
         
-         let mlBinary = transformToBinary(input: [array.count])//the message has a length of l bits. convert to binary the number of bits
-        
+         let mlBinary = transformToBinary(input: [l])//the message has a length of l bits. convert to binary the number of bits
        //add another array made of 64 bits, the big endian being the conversion of l bits to binary - > (0 0 0 0 0 ..... [binary of l])
-        for _ in 1...(64-mlBinary[0].count){
+        for _ in 1..<(64-mlBinary[0].count){
             array.append(0)
         }
         for ar in mlBinary{
@@ -236,4 +248,5 @@ class SHA1 : Convertible{
     }
     
 }
-   
+
+
