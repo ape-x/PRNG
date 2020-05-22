@@ -33,8 +33,8 @@ class LFSR : Convertible{
     func transformToHex(input : Int)->String{
         return converter.transformToHex(input: input)
     }
-    func transformBinaryToAscii(input m : [Int])->Int{
-        return converter.transformBinaryToAscii(input : m)
+    func transformBinaryToInt(input m : [Int])->Int{
+        return converter.transformBinaryToInt(input : m)
     }
     func transformTo32(input : Int)->[Int]{
         return converter.transformTo32(input : input)

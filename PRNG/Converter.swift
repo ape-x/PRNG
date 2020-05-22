@@ -67,7 +67,7 @@ class Converter{
         return str
     }
     
-    func transformBinaryToAscii(input m : [Int])->Int{
+    func transformBinaryToInt(input m : [Int])->Int{
         var ascii : Int = 0
         var k = m.count-1
             for j in 0..<m.count{
@@ -117,6 +117,79 @@ protocol Convertible{
     func transformToBinary(input : [Int])->[[Int]]
     func transformToAscii(input : String)->[Int]
     func transformToHex(input : Int)->String
-    func transformBinaryToAscii(input m : [Int])->Int
+    func transformBinaryToInt(input m : [Int])->Int
     func transformTo32(input : Int)->[Int]
+}
+
+
+extension Int{
+    var binary32 : [Int]{
+        get{
+            var array = [Int]()
+            var number = self
+            while true{
+                array.append(number%2)
+                if number/2 == 0{
+                    break
+                }
+                number = number/2
+            }
+            while array.count<32{
+                array.append(0)
+            }
+            array = array.reversed()
+            return array
+        }
+    }
+    
+    var binary8 : [Int]{
+        get{
+            var array = [Int]()
+            var number = self
+            while true{
+                array.append(number%2)
+                if number/2 == 0{
+                    break
+                }
+                number = number/2
+            }
+            while array.count<8{
+                array.append(0)
+            }
+            array = array.reversed()
+            return array
+        }
+    }
+    
+    var hex : String{
+        get{
+            var value = ""
+            var number = self
+            var array = [Int]()
+            
+            while true{
+                let D = Double(number)/16
+                let R = Int((D-Double((number/16)))*16)
+                number = Int(D)
+                array.append(R)
+                if number/16 == 0{
+                    array.append(Int(D))
+                    break
+                }
+            }
+            while array.count<8{
+                array.append(0)
+            }
+            array = array.reversed()
+            for i in 0..<array.count{
+                if array[i]>=10{
+                    value.append(String(UnicodeScalar(array[i]+55)!))
+                }else{
+                    value.append(String(UnicodeScalar(array[i]+48)!))
+                }
+            }
+            
+            return value
+        }
+    }
 }

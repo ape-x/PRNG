@@ -29,7 +29,8 @@ class SHA1 : Convertible{
     
     func hash(){
         let asciiCodes = transformToAscii(input: input) // conversion of text input to ascii
-        let binaries = transformToBinary(input: asciiCodes)//conversion of ascii to binary
+        var binaries : [[Int]] = transformToBinary(input: asciiCodes)//conversion of ascii to binary
+        
         var num = preprocessing(input: binaries)
         var M = [[[Int]]]()
         var matrix = [[Int]]()
@@ -65,48 +66,22 @@ class SHA1 : Convertible{
         var d = 271733878
         var e = 3285377520
         
-        var A : [Int] {
-            get{
-                return transformTo32(input: a)
-            }
-        }
-        var B : [Int]{
-            get{
-                return transformTo32(input: b)
-            }
-        }
-        var C : [Int]{
-            get{
-                return transformTo32(input: c)
-            }
-        }
-        var D : [Int]{
-            get{
-                return transformTo32(input: d)
-            }
-        }
-        var E : [Int]{
-            get{
-                return transformTo32(input: e)
-            }
-        }
-      
         for i in 0...79{
             var k = 0x0
             var t = 0
             switch i {
             case 0...19 :
                k = 0x5a827999
-                 t = transformBinaryToAscii(input: leftrotate(input: A, times: 5))+transformBinaryToAscii(input : logicalOne(x: B, y: C, z: D))+transformBinaryToAscii(input: W[i])+e+k
+               t = transformBinaryToInt(input: leftrotate(input: a.binary32, times: 5))+transformBinaryToInt(input : logicalOne(x: b.binary32, y: c.binary32, z: d.binary32))+transformBinaryToInt(input: W[i])+e+k
             case 20...39 :
                 k = 0x6ed9eba1
-                 t = transformBinaryToAscii(input: leftrotate(input: A, times: 5))+transformBinaryToAscii(input : logicalTwo(x: B, y: C, z: D))+transformBinaryToAscii(input: W[i])+e+k
+                t = transformBinaryToInt(input: leftrotate(input: a.binary32, times: 5))+transformBinaryToInt(input : logicalTwo(x: b.binary32, y: c.binary32, z: d.binary32))+transformBinaryToInt(input: W[i])+e+k
             case 40...59 :
                 k = 0x8f1bbcdc
-                 t = transformBinaryToAscii(input: leftrotate(input: A, times: 5))+transformBinaryToAscii(input : logicalThree(x: B, y: C, z: D))+transformBinaryToAscii(input: W[i])+e+k
+                t = transformBinaryToInt(input: leftrotate(input: a.binary32, times: 5))+transformBinaryToInt(input : logicalThree(x: b.binary32, y: c.binary32, z: d.binary32))+transformBinaryToInt(input: W[i])+e+k
             case 60...79 :
                 k = 0xca62c1d6
-                 t = transformBinaryToAscii(input: leftrotate(input: A, times: 5))+transformBinaryToAscii(input : logicalTwo(x: B, y: C, z: D))+transformBinaryToAscii(input: W[i])+e+k
+                t = transformBinaryToInt(input: leftrotate(input: a.binary32, times: 5))+transformBinaryToInt(input : logicalTwo(x: b.binary32, y: c.binary32, z: d.binary32))+transformBinaryToInt(input: W[i])+e+k
             default :
                 break
             }
@@ -117,20 +92,17 @@ class SHA1 : Convertible{
                 tm.remove(at: 0)
             }
             }
-            t = transformBinaryToAscii(input: tm)
+            t = transformBinaryToInt(input: tm)
             e = d
             d = c
-            c = transformBinaryToAscii(input: leftrotate(input: B, times: 30))
+            c = transformBinaryToInt(input: leftrotate(input: b.binary32, times: 30))
             b = a
             a = t
        
         }
-        let bH0 = transformToBinary(input: [H0+a])
-        let bH1 = transformToBinary(input : [H1+b])
-        let bH2 = transformToBinary(input : [H2+c])
-        let bH3 = transformToBinary(input : [H3+d])
-        let bH4 = transformToBinary(input : [H4+e])
-        var hash = [bH0[0], bH1[0], bH2[0], bH3[0], bH4[0]]
+        
+        var hash = [(H0+a).binary8, (H1+b).binary8, (H2+c).binary8, (H3+d).binary8, (H4+e).binary8]
+        
         for i in 0..<hash.count{
             if hash[i].count>32{
                 while hash[i].count>32{
@@ -140,7 +112,7 @@ class SHA1 : Convertible{
         }
         var Hash = ""
         for i in 0..<hash.count{
-            Hash+="\(transformToHex(input : transformBinaryToAscii(input : hash[i])))"
+            Hash+="\((transformBinaryToInt(input : hash[i])).hex)"
         }
         print(Hash)
     }
@@ -206,8 +178,8 @@ class SHA1 : Convertible{
     func transformToHex(input : Int)->String{
         return converter.transformToHex(input: input)
     }
-    func transformBinaryToAscii(input m : [Int])->Int{
-        return converter.transformBinaryToAscii(input : m)
+    func transformBinaryToInt(input m : [Int])->Int{
+        return converter.transformBinaryToInt(input : m)
     }
     func transformTo32(input : Int)->[Int]{
         return converter.transformTo32(input : input)
@@ -248,5 +220,4 @@ class SHA1 : Convertible{
     }
     
 }
-
 
