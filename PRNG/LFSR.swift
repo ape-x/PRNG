@@ -21,7 +21,9 @@ class LFSR : Convertible{
         self.seed = seed
         converter = Converter()
         seedAsciiValues = transformToAscii(input: seed)
-        R = transformToBinary(input: seedAsciiValues)
+        for i in seedAsciiValues{
+            R.append(i.binary8)
+        }
     }
     
     func transformToAscii(input: String) -> [Int] {
@@ -36,10 +38,7 @@ class LFSR : Convertible{
     func transformBinaryToInt(input m : [Int])->Int{
         return converter.transformBinaryToInt(input : m)
     }
-    func transformTo32(input : Int)->[Int]{
-        return converter.transformTo32(input : input)
-    }
-    
+  
     func startMachine(times_shifted turns : Int){
         for _ in 1...turns  {
         for i in 0..<R.count{

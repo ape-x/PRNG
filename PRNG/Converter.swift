@@ -116,9 +116,7 @@ class Converter{
 protocol Convertible{
     func transformToBinary(input : [Int])->[[Int]]
     func transformToAscii(input : String)->[Int]
-    func transformToHex(input : Int)->String
     func transformBinaryToInt(input m : [Int])->Int
-    func transformTo32(input : Int)->[Int]
 }
 
 
