@@ -12,6 +12,7 @@
 		7AF9758D246B496C00FE43E5 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AF9758C246B496C00FE43E5 /* main.swift */; };
 		7AF97594246B61C100FE43E5 /* LFSR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AF97593246B61C100FE43E5 /* LFSR.swift */; };
 		7AF97596246B61CC00FE43E5 /* Shrinking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AF97595246B61CC00FE43E5 /* Shrinking.swift */; };
+		B873778B24797D95008A719B /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B873778A24797D95008A719B /* Int+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,6 +34,7 @@
 		7AF9758C246B496C00FE43E5 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		7AF97593246B61C100FE43E5 /* LFSR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LFSR.swift; sourceTree = "<group>"; };
 		7AF97595246B61CC00FE43E5 /* Shrinking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shrinking.swift; sourceTree = "<group>"; };
+		B873778A24797D95008A719B /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 				7AF97595246B61CC00FE43E5 /* Shrinking.swift */,
 				7AB1AA31246D947C005E6D52 /* SecureHashAlgorithm.swift */,
 				7AB1AA33246D971E005E6D52 /* Converter.swift */,
+				B873778A24797D95008A719B /* Int+Extensions.swift */,
 			);
 			path = PRNG;
 			sourceTree = "<group>";
@@ -135,6 +138,7 @@
 				7AB1AA34246D971E005E6D52 /* Converter.swift in Sources */,
 				7AF97594246B61C100FE43E5 /* LFSR.swift in Sources */,
 				7AF97596246B61CC00FE43E5 /* Shrinking.swift in Sources */,
+				B873778B24797D95008A719B /* Int+Extensions.swift in Sources */,
 				7AB1AA32246D947C005E6D52 /* SecureHashAlgorithm.swift in Sources */,
 				7AF9758D246B496C00FE43E5 /* main.swift in Sources */,
 			);

@@ -13,3 +13,4 @@ var a : LFSR = LFSR(seed :"a")
 var b : SHA1 = SHA1(input: "abc")
 b.hash()
 a.startMachine(times_shifted: 7)
+

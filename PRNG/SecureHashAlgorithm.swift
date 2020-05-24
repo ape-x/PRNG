@@ -30,16 +30,17 @@ class SHA1 : Convertible{
     func hash(){
         let asciiCodes = transformToAscii(input: input) // conversion of text input to ascii
         var binaries = [[Int]]()
+        var sum = 0
+        var Hash = ""
         for value in asciiCodes{
             binaries.append(value.binary8)
+            sum+=value.binary8.count
         }
-        
         var num = preprocessing(input: binaries)
         var M = [[[Int]]]()
         var matrix = [[Int]]()
         var array = [Int]()
         let N = num.count/512 // Number of messages
-        
         for _ in 1...N{
             for _ in 0..<16{
             for _ in 0..<32{
@@ -53,11 +54,12 @@ class SHA1 : Convertible{
             matrix = []
         }
         //Functioning on a single 512 block atm
+        for chunk in 1...N{//               <<
         var W = [[Int]]()
-        print(M)
         for array in M[0]{
             W.append(array)
         }
+            M.remove(at: 0)//           <<<<<
         for i in 16...79{
             var number = wordExpansion(A: W[i-3], B: W[i-8], C: W[i-14], D: W[i-16])
             number = leftrotate(input: number, times: 1)
@@ -113,10 +115,14 @@ class SHA1 : Convertible{
                 }
             }
         }
-        var Hash = ""
-        for i in 0..<hash.count{
-            Hash+="\((transformBinaryToInt(input : hash[i])).hex)"
-        }
+            if chunk == N{
+            for i in 0..<hash.count{
+                Hash+="\((transformBinaryToInt(input : hash[i])).hex)"
+                }
+            }
+
+        } // <<<<
+        
         print(Hash)
         
     }
@@ -211,4 +217,7 @@ class SHA1 : Convertible{
     }
     
 }
+
+//111010000
+
 
