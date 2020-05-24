@@ -9,13 +9,8 @@
 import Foundation
 
 class SHA1 : Convertible{
-    
-    var H0 : Int = 0x67452301
-    var H1 : Int = 0xEFCDAB89
-    var H2 : Int = 0x98BADCFE
-    var H3 : Int = 0x10325476
-    var H4 : Int = 0xC3D2E1F0
 
+    var H = [0x67452301 , 0xEFCDAB89 , 0x98BADCFE, 0x10325476, 0xC3D2E1F0]
     
     var input : String
     var converter : Converter
@@ -66,11 +61,11 @@ class SHA1 : Convertible{
             W.append(number)
         }
         
-        var a = 1732584193
-        var b = 4023233417
-        var c = 2562383102
-        var d = 271733878
-        var e = 3285377520
+            var a : Int = H[0]
+            var b : Int = H[1]
+            var c : Int = H[2]
+            var d : Int = H[3]
+            var e : Int = H[4]
         
         for i in 0...79{
             var k = 0x0
@@ -103,16 +98,28 @@ class SHA1 : Convertible{
             c = transformBinaryToInt(input: leftrotate(input: b.binary32, times: 30))
             b = a
             a = t
-       
+            print(a.hex,b.hex,c.hex,d.hex,e.hex)
         }
         
-        var hash = [(H0+a).binary8, (H1+b).binary8, (H2+c).binary8, (H3+d).binary8, (H4+e).binary8]
-        
+        var hash = [(H[0]+a).binary8, (H[1]+b).binary8, (H[2]+c).binary8, (H[3]+d).binary8, (H[4]+e).binary8]
+        H[0]+=a//overflow
+        H[1]+=b
+        H[2]+=c
+        H[3]+=d
+        H[4]+=e
+            
         for i in 0..<hash.count{
             if hash[i].count>32{
                 while hash[i].count>32{
                     hash[i].remove(at: 0)
                 }
+            }
+            if H[i].binary8.count>32{
+                var binary = H[i].binary8
+                while binary.count>32{
+                    binary.remove(at: 0)
+                }
+                H[i] = transformBinaryToInt(input: binary)
             }
         }
             if chunk == N{
@@ -122,9 +129,7 @@ class SHA1 : Convertible{
             }
 
         } // <<<<
-        
         print(Hash)
-        
     }
     
     func leftrotate(input : [Int], times : Int)->[Int]{
@@ -193,13 +198,13 @@ class SHA1 : Convertible{
         }
         let l = array.count
         array.append(1) // Pad 1
-        k = 448 - (l%512)
+        k = 448 - ((l%512)+1)
         k = k%512
         if k<0{
             k = k*(-1)
             k = 512-k
         }
-        for _ in 0..<k{
+        for _ in 0...k{
             array.append(0)
         }
         
@@ -217,7 +222,4 @@ class SHA1 : Convertible{
     }
     
 }
-
-//111010000
-
 

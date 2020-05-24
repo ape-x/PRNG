@@ -24,6 +24,11 @@ extension Int{
             while array.count<32{
                 array.append(0)
             }
+            if array.count>32{
+                while array.count>32{
+                    array.remove(at: 0)
+                }
+            }
             array = array.reversed()
             return array
         }
