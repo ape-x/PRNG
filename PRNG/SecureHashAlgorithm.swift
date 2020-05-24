@@ -14,29 +14,48 @@ class SHA1 : Convertible{
     
     var input : String
     var converter : Converter
-    var messageLength : Int
+    var messageDigest : String?
     
     init(input : String){
         self.input = input
         converter = Converter()
-        messageLength = input.count
     }
     
-    func hash(){
+    //PROTOCOL METHODS
+    
+    
+     func transformToAscii(input : String)->[Int]{
+         return converter.transformToAscii(input: input)
+     }
+     
+     func transformToBinary(input : [Int])->[[Int]]{
+         return converter.transformToBinary(input: input)
+     }
+     func transformBinaryToInt(input m : [Int])->Int{
+         return converter.transformBinaryToInt(input : m)
+     }
+    
+    //METHODS
+    
+    func hashComputation(){
+        
         let asciiCodes = transformToAscii(input: input) // conversion of text input to ascii
-        var binaries = [[Int]]()
-        var sum = 0
+        var binaries = [[Int]]()//Binary values of ASCII
         var Hash = ""
+        
         for value in asciiCodes{
-            binaries.append(value.binary8)
-            sum+=value.binary8.count
+            binaries.append(value.binary)
         }
+        
         var num = preprocessing(input: binaries)
         var M = [[[Int]]]()
-        var matrix = [[Int]]()
-        var array = [Int]()
         let N = num.count/512 // Number of messages
-        for _ in 1...N{
+        
+        for _ in 1...N{ // Split into 512 bit matrixes made of 16 arrays, each 32 digit long
+            
+            var matrix = [[Int]]()
+            var array = [Int]()
+
             for _ in 0..<16{
             for _ in 0..<32{
                 array.append(num[0])
@@ -48,13 +67,15 @@ class SHA1 : Convertible{
             M.append(matrix)
             matrix = []
         }
-        //Functioning on a single 512 block atm
-        for chunk in 1...N{//               <<
-        var W = [[Int]]()
+        
+        for chunk in 1...N{ // Cycle through each 512 chunk
+            
+        var W = [[Int]]()   //32bit word array
+            
         for array in M[0]{
             W.append(array)
         }
-            M.remove(at: 0)//           <<<<<
+            M.remove(at: 0)
         for i in 16...79{
             var number = wordExpansion(A: W[i-3], B: W[i-8], C: W[i-14], D: W[i-16])
             number = leftrotate(input: number, times: 1)
@@ -86,7 +107,7 @@ class SHA1 : Convertible{
             default :
                 break
             }
-            var tm = t.binary8
+            var tm = t.binary
             if tm.count>32{
             while tm.count>32{
                 tm.remove(at: 0)
@@ -98,11 +119,10 @@ class SHA1 : Convertible{
             c = transformBinaryToInt(input: leftrotate(input: b.binary32, times: 30))
             b = a
             a = t
-            print(a.hex,b.hex,c.hex,d.hex,e.hex)
         }
         
-        var hash = [(H[0]+a).binary8, (H[1]+b).binary8, (H[2]+c).binary8, (H[3]+d).binary8, (H[4]+e).binary8]
-        H[0]+=a//overflow
+        var hash = [(H[0]+a).binary, (H[1]+b).binary, (H[2]+c).binary, (H[3]+d).binary, (H[4]+e).binary]
+        H[0]+=a
         H[1]+=b
         H[2]+=c
         H[3]+=d
@@ -114,8 +134,8 @@ class SHA1 : Convertible{
                     hash[i].remove(at: 0)
                 }
             }
-            if H[i].binary8.count>32{
-                var binary = H[i].binary8
+            if H[i].binary.count>32{
+                var binary = H[i].binary
                 while binary.count>32{
                     binary.remove(at: 0)
                 }
@@ -128,8 +148,8 @@ class SHA1 : Convertible{
                 }
             }
 
-        } // <<<<
-        print(Hash)
+        }
+        messageDigest = Hash
     }
     
     func leftrotate(input : [Int], times : Int)->[Int]{
@@ -176,17 +196,7 @@ class SHA1 : Convertible{
         }
         return t
     }
-    
-    func transformToAscii(input : String)->[Int]{
-        return converter.transformToAscii(input: input)
-    }
-    
-    func transformToBinary(input : [Int])->[[Int]]{
-        return converter.transformToBinary(input: input)
-    }
-    func transformBinaryToInt(input m : [Int])->Int{
-        return converter.transformBinaryToInt(input : m)
-    }
+ 
     
     func preprocessing(input m : [[Int]])->[Int]{
         var array = [Int]()

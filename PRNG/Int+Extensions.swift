@@ -34,7 +34,7 @@ extension Int{
         }
     }
     
-    var binary8 : [Int]{
+    var binary : [Int]{
         get{
             var array = [Int]()
             var number = self
