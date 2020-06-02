@@ -11,6 +11,7 @@
 		7AB1AA34246D971E005E6D52 /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AB1AA33246D971E005E6D52 /* Converter.swift */; };
 		7AF9758D246B496C00FE43E5 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AF9758C246B496C00FE43E5 /* main.swift */; };
 		7AF97596246B61CC00FE43E5 /* Shrinking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AF97595246B61CC00FE43E5 /* Shrinking.swift */; };
+		B8031A08248560FF00C9E019 /* SHA.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8031A07248560FF00C9E019 /* SHA.swift */; };
 		B873778B24797D95008A719B /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B873778A24797D95008A719B /* Int+Extensions.swift */; };
 		B873778D247ADD80008A719B /* LinearFeedbackShiftRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = B873778C247ADD80008A719B /* LinearFeedbackShiftRegister.swift */; };
 /* End PBXBuildFile section */
@@ -33,6 +34,7 @@
 		7AF97589246B496C00FE43E5 /* PRNG */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = PRNG; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AF9758C246B496C00FE43E5 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		7AF97595246B61CC00FE43E5 /* Shrinking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shrinking.swift; sourceTree = "<group>"; };
+		B8031A07248560FF00C9E019 /* SHA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHA.swift; sourceTree = "<group>"; };
 		B873778A24797D95008A719B /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
 		B873778C247ADD80008A719B /* LinearFeedbackShiftRegister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearFeedbackShiftRegister.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -73,6 +75,7 @@
 				7AB1AA33246D971E005E6D52 /* Converter.swift */,
 				B873778A24797D95008A719B /* Int+Extensions.swift */,
 				B873778C247ADD80008A719B /* LinearFeedbackShiftRegister.swift */,
+				B8031A07248560FF00C9E019 /* SHA.swift */,
 			);
 			path = PRNG;
 			sourceTree = "<group>";
@@ -140,6 +143,7 @@
 				B873778B24797D95008A719B /* Int+Extensions.swift in Sources */,
 				7AB1AA32246D947C005E6D52 /* SecureHashAlgorithm.swift in Sources */,
 				7AF9758D246B496C00FE43E5 /* main.swift in Sources */,
+				B8031A08248560FF00C9E019 /* SHA.swift in Sources */,
 				B873778D247ADD80008A719B /* LinearFeedbackShiftRegister.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -104,6 +104,7 @@ class SHA1 : Convertible{
             case 60...79 :
                 k = 0xca62c1d6
                 t = transformBinaryToInt(input: leftrotate(input: a.binary32, times: 5))+transformBinaryToInt(input : logicalTwo(x: b.binary32, y: c.binary32, z: d.binary32))+transformBinaryToInt(input: W[i])+e+k
+                
             default :
                 break
             }
@@ -196,9 +197,9 @@ class SHA1 : Convertible{
         }
         return t
     }
- 
     
-    func preprocessing(input m : [[Int]])->[Int]{
+    
+ func preprocessing(input m : [[Int]])->[Int]{
         var array = [Int]()
         var k = 0
         for i in 0..<m.count{ // append to a single array every element in the binaries matrix
@@ -209,7 +210,6 @@ class SHA1 : Convertible{
         let l = array.count
         array.append(1) // Pad 1
         k = 448 - ((l%512)+1)
-        k = k%512
         if k<0{
             k = k*(-1)
             k = 512-k

@@ -10,6 +10,29 @@ import Foundation
 
 
 
-var test = ShrinkingGenerator(seed: "ssh", key_length: 10)
-test.generateKey()
-print(test.output!)
+//var test = ShrinkingGenerator(seed: "abc", key_length: 1)
+//test.generateKey()
+//print(test.output!)
+
+var hash = SHA1(input: "abc")
+hash.hashComputation()
+print(hash.messageDigest!)
+var tt = SHA(seed: "abc")
+tt.preprocessing()
+
+
+
+
+
+
+
+
+/*
+ 
+ [1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1] - 3873835881
+ [0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0] - 1166362356
+ [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] - 983040
+ [0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1] - 1652246945
+ [1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0] - 3239511100
+ 
+ */
