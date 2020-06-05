@@ -18,7 +18,7 @@ class ShrinkingGenerator{
     var keyLength : Int
     
     init(seed : String, key_length l : Int){
-        hash = SHA1(input: seed)
+        hash = SHA1(seed: seed)
         hash.hashComputation()
         keyLength = l
         output = [Int]()
